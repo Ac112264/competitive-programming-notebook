@@ -1,6 +1,6 @@
 public class HeapSort {
 	public static <C extends Comparable<?super C>> void heapSort(C[] arr) {
-		// Modified from textbook
+		// Modified from Weiss, Ch. 7.5
 		// Heapify: build the heap, starting from the middle
 		for (int i = arr.length / 2 - 1; i >= 0; i--) {
 			percolateDown(arr, i, arr.length);

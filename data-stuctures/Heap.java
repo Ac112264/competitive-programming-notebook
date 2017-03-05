@@ -28,7 +28,7 @@ public class Heap<C extends Comparable<?super C>> {
 		// Throw exception if full
 		if (isFull()) { throw new RuntimeException("Queue is full"); }
 
-		// Taken from textbook
+		// Taken from Weiss, Ch. 6.3
 		// Percolate up
 		int hole = ++currentSize; // Increment size
 		// Use element 0 as scratch, since that is not used
@@ -76,7 +76,7 @@ public class Heap<C extends Comparable<?super C>> {
 		// Original hole
 		C startHole = arr[hole];
 
-		// Modified from textbook
+		// Modified from Weiss, Ch. 6.3
 		// While there is at least one chlid
 		while (hole * 2 <= end) {
 			child = hole * 2;

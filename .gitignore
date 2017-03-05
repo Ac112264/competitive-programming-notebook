@@ -1,3 +1,12 @@
+# Ignore everything without an extension (binary files)
+*
+!/**/
+!*.*
+
+# Don't ignore these
+!.gitignore
+!Makefile
+
 # Standard stuff
 .DS_Store
 .*.swp
