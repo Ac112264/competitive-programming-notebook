@@ -6,6 +6,7 @@
 # Don't ignore these
 !.gitignore
 !Makefile
+!vimrc
 
 # Standard stuff
 .DS_Store

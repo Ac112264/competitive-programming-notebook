@@ -1,71 +1,81 @@
 #include <iostream>
 
+template<typename T>
+struct LLNode {
+	T data;
+    LLNode<T>* next;
+
+    LLNode() { data = nullptr; next = 0; };
+	LLNode(const T _d, LLNode* _n = nullptr) : data(_d), next(_n) { }
+	LLNode& operator=(const LLNode&) = delete;
+
+};
+
 template <typename T>
 class LinkedList {
 private:
-	struct Node {
-		T data;
-		Node* next;
-
-		// Constructor
-		Node(const T data, Node* next = nullptr) : data(data), next(next) { }
-
-		// Disable assignment operator
-		Node& operator=(const Node&) = delete;
-
-	};
-
-	Node* head;
-	Node* tail;
-
-	int size;
+	LLNode<T>* head;
+	LLNode<T>* tail;
+	int _size;
 
 public:
 	// Constructor
-	LinkedList() : head(nullptr), tail(nullptr), size(0) { }
+	LinkedList() :
+		head(nullptr), tail(nullptr), _size(0) { }
 
 	// Destructor
 	~LinkedList() {
-		// TODO
+        LLNode<T>* it = head->next;
+        LLNode<T>* it_next = it->next;
+        while (it) {
+            delete it;
+            it = it_next;
+            it_next = it->next;
+        }
+        delete head;
 	}
 
 	// Prepend to head
 	void prepend(const T element) {
-		Node* newHead = new Node(element, nullptr);
+		LLNode<T>* newHead = new LLNode<T>(element, nullptr);
 		newHead->next = head;
 		head = newHead;
 		// Make tail the new head if it doesn't exist (empty list)
 		if (!tail) { tail = head; }
-		size++;
+		_size++;
 	}
 
 	// Append to tail
 	void append(const T element) {
-		Node* newTail = new Node(element, nullptr);
+		LLNode<T>* newTail = new LLNode<T>(element, nullptr);
 		// Make the head the new tail if it doesn't exist (empty list)
 		// Otherwise set a reference from the old tail to the new tail
 		if (!head) { head = newTail; }
 		else { tail->next = newTail; }
 		tail = newTail;
-		size++;
+		_size++;
 	}
+
+    int size() {
+        return _size;
+    };
 
 	// Print values
 	void print(std::ostream& stream = std::cout) const {
-		Node* curr = head;
-		while (curr) {
-			stream << curr->data << " -> ";
-			curr = curr->next;
+		LLNode<T>* it = head;
+		while (it) {
+			stream << it->data << " -> ";
+			it = it->next;
 		}
 		stream << "null" << std::endl;
 	}
 
 };
 
-int main(int argc, const char *argv[]) {
+int main() {
 	std::cout << "Hello, world!" << std::endl;
 
-	LinkedList<int> list{};
+	LinkedList<int> list;
 	list.prepend(3);
 	list.prepend(2);
 	list.prepend(1);
@@ -73,7 +83,6 @@ int main(int argc, const char *argv[]) {
 	list.append(5);
 	list.append(6);
 	list.print();
-
 
 	return 0;
 }
