@@ -1,4 +1,8 @@
-void topo_sort() {
+#include "graph.cpp"
+#include "graph_io.cpp"
+
+// Topological sort
+void Graph::toposort() {
 	queue<int> q; // candidates with indegree 0
 	int counter = 0;
 	int sorted[V];
@@ -24,9 +28,17 @@ void topo_sort() {
 		throw; // Cycle found
 	}
 
-	// Print topo-sorted vertices
+	// print topo-sorted vertices
 	cout << "Topo sort:" << endl;
 	for (int i = 0; i < V; i++) {
 		cout << rev_map[sorted[i]] << " ";
 	}
+}
+
+int main() {
+	Graph graph = Graph::read_graph(cin);
+
+	graph.print();
+	cout << endl;
+	graph.toposort();
 }

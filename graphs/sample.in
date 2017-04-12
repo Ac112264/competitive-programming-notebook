@@ -1,0 +1,23 @@
+11 21
+s A B C D E F G H I t
+s A
+s G
+s D
+A B
+A E
+B C
+C t
+D A
+D E
+E C
+E F
+E I
+F C
+F t
+G D
+G E
+G H
+H E
+H I
+I F
+I t
