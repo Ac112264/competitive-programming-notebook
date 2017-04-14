@@ -1,6 +1,8 @@
 #include "graph.cpp"
 #include "graph_io.cpp"
 
+#include <queue>
+
 // Topological sort
 void Graph::toposort() {
 	queue<int> q; // candidates with indegree 0
@@ -33,12 +35,4 @@ void Graph::toposort() {
 	for (int i = 0; i < V; i++) {
 		cout << rev_map[sorted[i]] << " ";
 	}
-}
-
-int main() {
-	Graph graph = Graph::read_graph(cin);
-
-	graph.print();
-	cout << endl;
-	graph.toposort();
 }

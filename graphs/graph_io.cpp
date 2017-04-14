@@ -1,3 +1,6 @@
+#ifndef GRAPH_IO_H
+#define GRAPH_IO_H
+
 #include "graph.cpp"
 
 /*
@@ -38,19 +41,23 @@ Graph Graph::read_graph(istream& in) {
 
 void Graph::print(ostream& out) const {
 	out << "Graph G(" << V << ", " << E << ")" << endl;
+	out << "Adjacency list: " << endl;
 
 	for (auto it : map) {
-		out << it.first << ": ";
+		string vertex = it.first;
+		int vertex_i = it.second;
 
-		for (auto list_it : edges[it.second]) {
-			// out << rev_map[list_it] << " ";
-			out << list_it << " ";
+		out << vertex << ": ";
+
+		for (auto edge_i : edges[vertex_i]) {
+			out << rev_map[edge_i] << " ";
 		}
 
-		out << "(indegree " << in_degs[it.second] << ", ";
-		out << "outdegree " << out_degs[it.second] << ")";
+		out << "(indegree " << in_degs[vertex_i] << ", ";
+		out << "outdegree " << out_degs[vertex_i] << ")";
 
 		out << endl;
 	}
 }
 
+#endif

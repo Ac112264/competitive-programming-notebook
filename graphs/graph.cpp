@@ -3,22 +3,20 @@
 
 #include <iostream>
 #include <string>
-#include <unordered_map>
-#include <forward_list>
-#include <queue>
+#include <map>
+#include <list>
 
 using namespace std;
 
-// Graph using an adjacency list
-class Graph {
-private:
-	int V;
-	int E;
+// Graph implemeted using an adjacency list
+struct Graph {
+	const int V;
+	const int E;
 	int curr_size;
 
-	unordered_map<string, int> map; // hashmap of vertex name -> index
+	map<string, int> map; // hashmap of vertex name -> index
 	string* rev_map; // reverse mapping of vertex name -> index
-	forward_list<int>* edges; // array of linked lists
+	list<int>* edges; // array of linked lists
 	int* in_degs; // indegrees
 	int* out_degs; // outdegrees
 
@@ -26,9 +24,10 @@ public:
 	// Constructor
 	Graph(int V, int E) :
 		V(V), E(E), curr_size(0),
-		map(V) {
+		// map(V)
+		map() {
 			rev_map = new string[V];
-			edges = new forward_list<int>[E];
+			edges = new list<int>[E];
 			in_degs = new int[V];
 			out_degs = new int[V];
 
@@ -48,7 +47,7 @@ public:
 			map[v] = curr_size;
 			rev_map[curr_size] = v;
 			curr_size++;
-			edges[map[v]] = forward_list<int>();
+			edges[map[v]] = list<int>();
 		}
 	}
 
@@ -59,18 +58,12 @@ public:
 		in_degs[map[to]]++;
 	}
 
-	// Return inverse graph
-	// TODO
-	/*
-	Graph transpose() {
-		Graph inverse(V, E);
-		return inverse;
-	}
-	*/
+	Graph transpose();
 
 	void toposort();
-	void dfs();
-	void bfs();
+
+	void dfs(int);
+	void bfs(int);
 
 	static Graph read_graph(istream& in = cin);
 	void print(ostream& out = cout) const;
