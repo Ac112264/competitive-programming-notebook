@@ -3,36 +3,33 @@
 template<typename T>
 struct LLNode {
 	T data;
-    LLNode<T>* next;
+	LLNode<T>* next;
 
-    LLNode() { data = nullptr; next = 0; };
-	LLNode(const T _d, LLNode* _n = nullptr) : data(_d), next(_n) { }
+	LLNode(const T _d = nullptr, LLNode* _n = nullptr) :
+		data(_d), next(_n) { }
 	LLNode& operator=(const LLNode&) = delete;
-
 };
 
 template <typename T>
-class LinkedList {
-private:
+struct LinkedList {
 	LLNode<T>* head;
 	LLNode<T>* tail;
-	int _size;
+	int size;
 
 public:
 	// Constructor
 	LinkedList() :
-		head(nullptr), tail(nullptr), _size(0) { }
+		head(nullptr), tail(nullptr), size(0) { }
 
 	// Destructor
 	~LinkedList() {
-        LLNode<T>* it = head->next;
-        LLNode<T>* it_next = it->next;
-        while (it) {
-            delete it;
-            it = it_next;
-            it_next = it->next;
-        }
-        delete head;
+		LLNode<T>* it = head->next;
+		while (it) {
+			LLNode<T>* next = it->next;
+			delete it;
+			it = next;
+		}
+		delete head;
 	}
 
 	// Prepend to head
@@ -42,7 +39,7 @@ public:
 		head = newHead;
 		// Make tail the new head if it doesn't exist (empty list)
 		if (!tail) { tail = head; }
-		_size++;
+		size++;
 	}
 
 	// Append to tail
@@ -53,12 +50,8 @@ public:
 		if (!head) { head = newTail; }
 		else { tail->next = newTail; }
 		tail = newTail;
-		_size++;
+		size++;
 	}
-
-    int size() {
-        return _size;
-    };
 
 	// Print values
 	void print(std::ostream& stream = std::cout) const {
