@@ -1,1 +1,3 @@
-../Makefile
+include ../Makefile
+
+all: main

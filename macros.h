@@ -15,7 +15,7 @@
 
 using namespace std; 
 
-#define debug_(x) cerr << "> " << #x << " = " << x << endl;
-#define repeat_(i,n) for(int i = 0; i < (n); i++)
+#define DEBUG(x) cerr << "> " << #x << " = " << x << '\n';
+#define REPEAT(i,n) for(int i = 0; i < (n); i++)
 
-#endif
+#endif // MACROS_H
