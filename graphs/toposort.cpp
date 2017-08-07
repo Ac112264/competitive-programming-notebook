@@ -1,5 +1,4 @@
 #include "graph.cpp"
-#include "graph_io.cpp"
 
 #include <queue>
 
@@ -27,11 +26,12 @@ void Graph::toposort() {
 	}
 
 	if (counter != V) {
-		throw; // Cycle found
+		cout << "Cycle found" << '\n';
+		return;
 	}
 
 	// print topo-sorted vertices
-	cout << "Topo sort:" << endl;
+	cout << "Topo sort:" << '\n';
 	for (int i = 0; i < V; i++) {
 		cout << rev_map[sorted[i]] << " ";
 	}

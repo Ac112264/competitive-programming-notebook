@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ struct Graph {
 
 public:
 	// Constructor
-	Graph(int V, int E) :
+	Graph(const int V, const int E) :
 		V(V), E(E), curr_size(0),
 		// map(V)
 		map() {
@@ -32,9 +33,8 @@ public:
 			out_degs = new int[V];
 
 			// Set to zero
-			for (int i = 0; i < V; i++) {
-				in_degs[i] = out_degs[i] = 0;
-			}
+			fill_n(in_degs, V, 0);
+			fill_n(out_degs, V, 0);
 	}
 
 	// Destructor is not explicitly defined.
@@ -42,7 +42,7 @@ public:
 	// and the rule of three/five would have to be followed
 
 	// Add vertex
-	void add_vertex(string v) {
+	void add_vertex(const string v) {
 		if (map.count(v) == 0) { // not found
 			map[v] = curr_size;
 			rev_map[curr_size] = v;
@@ -52,15 +52,37 @@ public:
 	}
 
 	// Add edge
-	void add_edge(string from, string to) {
+	void add_edge(const string from, const string to) {
 		edges[map[from]].push_front(map[to]);
 		out_degs[map[from]]++;
 		in_degs[map[to]]++;
 	}
 
-	Graph transpose();
+	// Return transpose graph
+	Graph transpose() const {
+		Graph graph_t(V, E);
+
+		// Add vertices
+		for (auto it : map) {
+			graph_t.add_vertex(it.first);
+		}
+
+		// Add edges
+		for (auto it : map) {
+			int vertex_i = it.second;
+
+			// Loop over edges
+			for (auto edge_i : edges[vertex_i]) {
+				graph_t.add_edge(rev_map[edge_i], rev_map[vertex_i]);
+			}
+		}
+
+		return graph_t;
+	}
 
 	void toposort();
+
+	void dijkstra(const int source);
 
 	void dfs(int);
 	void bfs(int);
@@ -70,4 +92,4 @@ public:
 
 };
 
-#endif
+#endif // GRAPH_CPP

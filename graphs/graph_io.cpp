@@ -24,7 +24,7 @@ Graph Graph::read_graph(istream& in) {
 		cin >> v;
 
 		graph.add_vertex(v);
-		// cout << "Adding vertex " << v << endl;
+		// cout << "Adding vertex " << v << '\n';
 	}
 
 	// Read edges
@@ -33,15 +33,15 @@ Graph Graph::read_graph(istream& in) {
 		cin >> from >> to;
 
 		graph.add_edge(from, to);
-		// cout << "Adding edge from " << from << " to " << to << endl;
+		// cout << "Adding edge from " << from << " to " << to << '\n';
 	}
 
 	return graph;
 }
 
 void Graph::print(ostream& out) const {
-	out << "Graph G(" << V << ", " << E << ")" << endl;
-	out << "Adjacency list: " << endl;
+	out << "Graph G(" << V << ", " << E << ")" << '\n';
+	out << "Adjacency list: " << '\n';
 
 	for (auto it : map) {
 		string vertex = it.first;
@@ -56,7 +56,7 @@ void Graph::print(ostream& out) const {
 		out << "(indegree " << in_degs[vertex_i] << ", ";
 		out << "outdegree " << out_degs[vertex_i] << ")";
 
-		out << endl;
+		out << '\n';
 	}
 }
 

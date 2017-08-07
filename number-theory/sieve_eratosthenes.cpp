@@ -39,6 +39,8 @@ int main(int argc, const char *argv[]) {
 			cout << i << " ";
 		}
 	}
+
+	delete[] sieve;
 	
 	return 0;
 }
