@@ -1,11 +1,11 @@
 #ifndef GRAPH_CPP
 #define GRAPH_CPP
 
-#include <iostream>
 #include <string>
 #include <map>
 #include <list>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -16,30 +16,24 @@ struct Graph {
 	int curr_size;
 
 	map<string, int> map; // hashmap of vertex name -> index
-	string* rev_map; // reverse mapping of vertex name -> index
-	list<int>* edges; // array of linked lists
-	int* in_degs; // indegrees
-	int* out_degs; // outdegrees
+	vector<string> rev_map; // reverse mapping of vertex name -> index
+	vector<list<int>> edges; // array of linked lists
+	vector<int> in_degs; // indegrees array
+	vector<int> out_degs; // outdegrees array
 
 public:
 	// Constructor
 	Graph(const int V, const int E) :
 		V(V), E(E), curr_size(0),
-		// map(V)
-		map() {
-			rev_map = new string[V];
-			edges = new list<int>[E];
-			in_degs = new int[V];
-			out_degs = new int[V];
-
-			// Set to zero
-			fill_n(in_degs, V, 0);
-			fill_n(out_degs, V, 0);
+		map(),
+		rev_map(V),
+		edges(E),
+		in_degs(V), out_degs(V)
+	{
+		// Set to zero
+		fill_n(in_degs.begin(), V, 0);
+		fill_n(out_degs.begin(), V, 0);
 	}
-
-	// Destructor is not explicitly defined.
-	// If it were, it would delete rev_map, edges, in_degs, out_degs
-	// and the rule of three/five would have to be followed
 
 	// Add vertex
 	void add_vertex(const string v) {
@@ -63,21 +57,34 @@ public:
 		Graph graph_t(V, E);
 
 		// Add vertices
-		for (auto it : map) {
+		for (auto& it : map) {
 			graph_t.add_vertex(it.first);
 		}
 
 		// Add edges
-		for (auto it : map) {
+		for (auto& it : map) {
 			int vertex_i = it.second;
 
 			// Loop over edges
-			for (auto edge_i : edges[vertex_i]) {
+			for (auto& edge_i : edges[vertex_i]) {
 				graph_t.add_edge(rev_map[edge_i], rev_map[vertex_i]);
 			}
 		}
 
 		return graph_t;
+	}
+
+	// Return a copy of the graph
+	Graph copy() const {
+		Graph graph_copy(V, E);
+
+		graph_copy.map = map;
+		graph_copy.rev_map = rev_map;
+		graph_copy.edges = edges;
+		graph_copy.in_degs = in_degs;
+		graph_copy.out_degs = out_degs;
+
+		return graph_copy;
 	}
 
 	void toposort();
@@ -87,9 +94,7 @@ public:
 	void dfs(int);
 	void bfs(int);
 
-	static Graph read_graph(istream& in = cin);
-	void print(ostream& out = cout) const;
-
+	void print();
 };
 
 #endif // GRAPH_CPP

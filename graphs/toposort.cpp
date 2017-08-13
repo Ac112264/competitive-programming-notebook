@@ -1,8 +1,10 @@
 #include "graph.cpp"
-
 #include <queue>
 
-// Topological sort
+/* Topological sort
+ * This function is destructive: it modifies in_degs and out_degs.
+ * Make a copy if you wish to preserve them.
+ */
 void Graph::toposort() {
 	queue<int> q; // candidates with indegree 0
 	int counter = 0;
@@ -26,13 +28,15 @@ void Graph::toposort() {
 	}
 
 	if (counter != V) {
-		cout << "Cycle found" << '\n';
+		printf("Cycle found\n");
 		return;
 	}
 
 	// print topo-sorted vertices
-	cout << "Topo sort:" << '\n';
+	printf("Topo sort:\n");
 	for (int i = 0; i < V; i++) {
-		cout << rev_map[sorted[i]] << " ";
+		const char* vertex = rev_map[sorted[i]].c_str();
+		printf("%s ", vertex);
 	}
+	printf("\n");
 }

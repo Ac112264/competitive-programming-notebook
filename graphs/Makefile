@@ -1,3 +1,3 @@
 include ../Makefile
 
-all: main
+all: graphs
